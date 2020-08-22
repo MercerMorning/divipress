@@ -92,6 +92,17 @@ class I_Widget_Company_Contacts extends WP_Widget{
                 class="widefat"
             >
         </p>
+        <p>
+            <label for="<?php echo $this->get_field_id('id-email-map'); ?>">
+                Выберите изображение с картой:
+            </label>
+            <input
+                    id="<?php echo $this->get_field_id('id-email-map'); ?>"
+                    type="file"
+                    name="<?php echo $this->get_field_name('email-map')?>"
+                    value="<?php echo $instance['email-map']; ?>"
+            >
+        </p>
         <?php
     }
 
@@ -139,6 +150,12 @@ class I_Widget_Company_Contacts extends WP_Widget{
         <tr>
             <td>
                 <?php echo apply_filters('i_widget_company_contacts', $instance['email-questions']); ?>
+            </td>
+        </tr>
+        <tr bgcolor="#d3d3d3"><td><b>Схема проезда</b></td></tr>
+        <tr>
+            <td align="center">
+                <img src="<?php echo $instance['email-map']; ?>" width="445" height="400">
             </td>
         </tr>
         <?php

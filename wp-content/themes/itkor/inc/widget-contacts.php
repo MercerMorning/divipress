@@ -40,7 +40,7 @@ class I_Widget_Contacts extends WP_Widget{
         </p>
         <p>
             <label for="<?php echo $this->get_field_id('id-email'); ?>">
-                Введите номер email:
+                Введите email:
             </label>
             <input
                     id="<?php echo $this->get_field_id('id-email'); ?>"
