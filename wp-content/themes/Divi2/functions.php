@@ -24,6 +24,13 @@ function i_register(){
     register_widget( 'I_Widget_Page_Name' );
     register_widget( 'I_Widget_Rubric_Name' );
     register_widget( 'I_Widget_Rubrics_Display' );
+
+    register_sidebar([
+        'name' => 'Года издания',
+        'id' => 'i-publish-years',
+        'before_widget' => null,
+        'after_widget' => null,
+    ]);
 }
 
 function i_paste_link( $attr ){
@@ -54,6 +61,20 @@ function i_paste_link( $attr ){
         return '';
     }
 }
+
+function my_template( $template ) {
+    # шаблон для группы рубрик
+    // этот пример будет использовать файл из папки темы tpl_special-cats.php,
+    // как шаблон для рубрик с ID 9, названием "Без рубрики" и слагом "php"
+    if( is_category( 27 ) ){
+        return get_stylesheet_directory() . '/publish-year-template.php';
+    }
+
+    return $template;
+
+}
+
+/**  */
 
 if ( ! isset( $content_width ) ) $content_width = 1080;
 
@@ -7637,4 +7658,137 @@ add_filter( 'et_theme_builder_template_layouts', 'et_divi_disable_theme_builder_
 //        ]
 //    ]);
 //}
+
+add_action('et_before_main_content', 'nv_main_content');
+
+function nv_main_content() {
+    $childrens = get_term_children(23, 'category');
+    foreach ($childrens as $children) {
+        $cat_name = get_cat_name($children);
+        if (is_category($cat_name)) :
+            if (is_active_sidebar('i-publish-years')):
+                dynamic_sidebar('i-publish-years');
+                ?>
+                <div class="MainTextBody"><br>
+                    <h4><font color="red">»</font> Журналы по логистике, маркетингу, менеджменту</h4>
+
+                    <br><br><br><br><br><br>
+                    <table class="MainTextBody1" width="90%" cellspacing="2" cellpadding="12" border="0">
+
+                        <tbody>
+                        <?php if (have_posts()):
+                            $i = 1;
+                            while (have_posts()) :
+                                the_post();
+                                ?>
+                                <tr>
+                                <tr>
+                                    <?php if ($i > 1): ?>
+                                        <td>
+                                            <hr>
+                                        </td>
+                                    <?php
+                                    endif;
+                                    $i++
+                                    ?>
+                                </tr>
+                                <td colspan="2">
+                                    <b>Журнал «<?php the_title(); ?>»</b>
+                                    <?php if (get_the_content()) : ?>
+                                        —
+                                        <?php
+                                        the_content();
+                                    endif;
+                                    ?>
+
+                                </td>
+
+                                </tr>
+
+                                <tr>
+                                    <?php if (get_the_post_thumbnail()) : ?>
+                                        <td width="200"><?php the_post_thumbnail(); ?></td>
+                                    <?php endif; ?>
+                                    <td><b>
+                                            Журнал
+                                            <?php if (get_field('journal_site')): ?>
+                                                <a href="<?php echo get_field('journal_site'); ?>">
+                                                    <?php the_title(); ?>
+                                                </a>
+                                            <?php
+                                            else:
+                                                the_title();
+                                            endif;
+                                            ?>
+                                        </b>
+                                        <br><br>
+                                        <?php if (get_field('journal_short_inf')) :?>
+                                            <?php echo get_field('journal_short_inf'); ?>
+                                        <?php endif; ?>
+                                        <?php if (get_field('journal_ogl')) :?>
+                                            <a href="<?php echo get_field('journal_ogl')['url']; ?>">Оглавление</a><br><br>
+                                        <?php endif; ?>
+                                        <?php if (get_field('journal_archive')) :?>
+                                            <a href="<?php echo get_field('journal_archive'); ?>">Архив журнала</a><br><br>
+                                        <?php endif; ?>
+                                        <?php if (get_field('journal_subscribe')) :?>
+                                            <a href="<?php echo get_field('journal_subscribe'); ?>">Подписка</a><br><br>
+                                        <?php endif; ?>
+                                        <?php if (get_field('journal_site')) :?>
+                                            <a href="<?php echo get_field('journal_site'); ?>"><?php echo get_field('journal_site'); ?></a><br><br>
+                                        <?php endif; ?>
+                                        <br><br>
+                                        <?php if (get_field('journal_phones') || get_field('journal_email_1') || get_field('journal_email_2')): ?>
+                                            <b>Редакция:</b><br><br>
+                                            <?php if (get_field('journal_phones')):
+                                                $phones = explode(',', get_field('journal_phones'));
+                                                echo 'Тел.:';
+                                                foreach ($phones as $phone):?>
+                                                    <a href="tel:<?php echo $phone; ?>"><?php echo $phone; ?></a>
+                                                    <br>
+                                                    <?php
+                                                    ?>
+                                                <?php
+                                                endforeach;
+                                            endif; ?>
+                                            <br>
+                                            <br>
+                                            <?php if (get_field('journal_email')):
+                                                $mails = explode(',', get_field('journal_email'));
+                                                echo 'E-mail:';
+                                                foreach ($mails as $mail):?>
+                                                    <a href="mailto:<?php echo $mail; ?>"><?php echo $mail; ?></a>
+                                                    <br>
+                                                    <?php
+                                                    ?>
+                                                <?php
+                                                endforeach;
+                                            endif; ?>
+                                            <br>
+                                            <br>
+                                        <?php endif; ?>
+                                        <br>
+                                    </td>
+                                </tr>
+                            <?php
+                            endwhile;
+                        endif;
+                        ?>
+
+                        </tbody>
+                    </table>
+
+
+                </div>
+            <?php
+            endif;
+        endif;
+    }
+}
+
+add_action('wp_head', 'setup_styles');
+
+function setup_styles(){
+    wp_enqueue_style('styles-main', get_stylesheet_directory_uri() . '/assets/styles/style.css');
+}
 
