@@ -8,6 +8,16 @@ body {
 
 /** NV styles **/
 /* correct divi styles */
+.business-plan-form-order {
+    position: absolute;
+    right: 0;
+    bottom: 100px;
+}
+
+.et_pb_row .et_pb_column:last-child, .et_pb_row .et_pb_column.et-last-child {
+    padding-left: 40px!important;
+}
+
 .et_pb_module.et_pb_image.et_pb_image_0_tb_body{
     display: flex;
     justify-content: center;

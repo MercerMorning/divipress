@@ -3,7 +3,7 @@
 class I_Widget_Rubric_Post extends WP_Widget{
     public function __construct()
     {
-        parent::__construct('I_Widget_Rubric_Post', 'Itkor - Текстовый виджет',
+        parent::__construct('I_Widget_Rubric_Post', 'Itkor - Виджет, выводящий посты рубрики',
             [
                 'name' => 'Itkor - Виджет с выбором рубрики постов, которые будут отображаться',
                 'description' => 'Выводит посты рубрики',
@@ -45,17 +45,22 @@ class I_Widget_Rubric_Post extends WP_Widget{
     public function widget($args, $instance)
     {
         $category = get_category($instance['rub']);
+        $category_description = category_description($instance['rub']);
         $category_name = $category->name;
         $category_id = $instance['rub'];
     ?>
-        <div>
-            <span class="MainTitle"><a href="<?php echo get_term_link(intval($category_id)); ?>" style="color: white;"><?php echo $category_name; ?></a>
-            </span>
-        </div>
-        <div class=MainTextBody1><br>
-            <table cellspacing=10 cellpadding=2 border=0 class=MainTextBody1 bgcolor='#F3F3F3'
-                   width='100%'>
-                <tr valign=top>
+        <div class="MainTextBody"><br>
+            <h4><font color="red">»</font> <?php echo $category_name; ?></h4>
+
+
+
+            <a name="#p1"></a>
+            <b><?php echo $category_description; ?></b>
+            <br><br>
+
+
+            <table width="100%" align="center">
+                <tbody><tr valign="top">
                     <?php
                     $query = new WP_Query([
                         'posts_per_page' => -1,
@@ -67,19 +72,16 @@ class I_Widget_Rubric_Post extends WP_Widget{
                         while ( $query->have_posts() ):
                             $query->the_post();
                             ?>
-                            <td width='50%'><?php the_date('j F'); ?>&nbsp;&nbsp;&nbsp;&nbsp;
-                                <br>
-                                <a href="<?php the_permalink(); ?>" class=MainTextLink>
-                                    <?php the_title(); ?>
-                                </a>
+                            <td align="center" width="25%"><?php the_post_thumbnail(); ?>
+                                <a href="<?php the_permalink(); ?>"><br><?php the_title(); ?></a>
                             </td>
                         <?php
                         endwhile;
                     endif;
                     ?>
                 </tr>
-            </table>
-            <br></div>
+                </tbody></table>
+        </div>
 <?php
     }
 
