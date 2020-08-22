@@ -7,6 +7,7 @@ require_once( __DIR__ . '/inc/widget-rubric-posts.php');
 require_once( __DIR__ . '/inc/widget-page-name.php');
 require_once( __DIR__ . '/inc/widget-rubric-name.php');
 require_once( __DIR__ . '/inc/widget-children-rubric.php');
+require_once( __DIR__ . '/inc/price-list-widget.php');
 
 
 add_action('widgets_init', 'i_register');
@@ -24,6 +25,7 @@ function i_register(){
     register_widget( 'I_Widget_Page_Name' );
     register_widget( 'I_Widget_Rubric_Name' );
     register_widget( 'I_Widget_Rubrics_Display' );
+    register_widget( 'I_Widget_Price_List' );
 
     register_sidebar([
         'name' => 'Года издания',
