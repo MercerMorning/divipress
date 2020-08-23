@@ -7331,6 +7331,10 @@ function my_template( $template ) {
 add_action('et_before_main_content', 'nv_main_content');
 
 function nv_main_content() {
+    if (is_page(1309)) {
+        echo do_shortcode('[wp_sitemap_page only="page"]', false);
+    }
+
     $childrens = get_term_children(23, 'category');
     foreach ($childrens as $children) {
         $cat_name = get_cat_name($children);
@@ -7499,4 +7503,13 @@ function i_modal_form_handler(){
     }
     header('Location: ' . home_url());
 }
+
+
+"johnpbloch/wordpress": "^5.5",
+        "wpackagist-plugin/advanced-custom-fields": "^5.8",
+        "wpackagist-plugin/hc-custom-wp-admin-url": "^1.4",
+        "wpackagist-plugin/rus-to-lat-advanced": "^1.1",
+        "wpackagist-plugin/wp-super-cache": "^1.7",
+        "wpackagist-plugin/wp-sitemap-page": "^1.6",
+        "wpackagist-plugin/yandex-metrica": "^1.8",
 
