@@ -7505,11 +7505,3 @@ function i_modal_form_handler(){
 }
 
 
-"johnpbloch/wordpress": "^5.5",
-        "wpackagist-plugin/advanced-custom-fields": "^5.8",
-        "wpackagist-plugin/hc-custom-wp-admin-url": "^1.4",
-        "wpackagist-plugin/rus-to-lat-advanced": "^1.1",
-        "wpackagist-plugin/wp-super-cache": "^1.7",
-        "wpackagist-plugin/wp-sitemap-page": "^1.6",
-        "wpackagist-plugin/yandex-metrica": "^1.8",
-
